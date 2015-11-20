@@ -30,9 +30,10 @@ class WebsocketWSGIServer(object):
         """
         redis_connection can be overriden by a mock object.
         """
-        comps = str(private_settings.WS4REDIS_SUBSCRIBER).split('.')
-        module = import_module('.'.join(comps[:-1]))
-        Subscriber = getattr(module, comps[-1])
+        path = str(private_settings.WS4REDIS_SUBSCRIBER)
+        module_dotpath, subscriber = path.rsplit('.', 1)
+        module = import_module(module_dotpath)
+        Subscriber = getattr(module, subscriber)
         self.possible_channels = Subscriber.subscription_channels + Subscriber.publish_channels
         self._redis_connection = redis_connection and redis_connection or StrictRedis(**private_settings.WS4REDIS_CONNECTION)
         self.Subscriber = Subscriber
