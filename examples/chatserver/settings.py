@@ -105,6 +105,9 @@ WS4REDIS_HEARTBEAT = '--heartbeat--'
 
 WS4REDIS_PREFIX = 'demo'
 
+from .config import get_allowed_channels
+WS4REDIS_ALLOWED_CHANNELS = get_allowed_channels
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
